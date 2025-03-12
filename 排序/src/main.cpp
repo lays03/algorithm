@@ -1,13 +1,12 @@
 #include <iostream>
+#include <vector>
 #include "mySort.h"
 int main()
 {
-    int arr[10] = {23, 21, 17, 3, 5, 11, 46, 6, 67, 71};
+    vector<int> v{80, 30, 60, 40, 20, 10, 50, 70};
+    int len = v.size();
+    cout << "len = " << len << endl;
     mySort m;
-    m.BubbleSort(arr, 10);
-    m.myPrint(arr, 10);
-
-    m.xuanzeSort(arr, 10);
-    m.myPrint(arr, 10);
-
+    m.ShellSort(v, len);
+    m.myPrint(v, len);
 }
