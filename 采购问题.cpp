@@ -25,34 +25,35 @@ int main()
             cin >> price >> num;
             mp.insert(make_pair(price, num));
         }
+        print(mp);
         
-        int res = 0;
-        for(map<int, int>::iterator it = mp.begin(); it != mp.end(); ++it)
-        {
-            price = it->first;
-            num = it->second;
-            if(money >= price * num) //当前的钱够全买
-            {
-                money -= price * num;
-                res += num;
-            }
-            else //不够全买
-            {
-                if(money / price == 0) //一件也买不起
-                {
-                    break;
-                }
-                else
-                {
-                    int temp =  money / price;
-                    res += temp;
-                    money -= price * temp;
+        // int res = 0;
+        // for(map<int, int>::iterator it = mp.begin(); it != mp.end(); ++it)
+        // {
+        //     price = it->first;
+        //     num = it->second;
+        //     if(money >= price * num) //当前的钱够全买
+        //     {
+        //         money -= price * num;
+        //         res += num;
+        //     }
+        //     else //不够全买
+        //     {
+        //         if(money / price == 0) //一件也买不起
+        //         {
+        //             break;
+        //         }
+        //         else
+        //         {
+        //             int temp =  money / price;
+        //             res += temp;
+        //             money -= price * temp;
 
-                }
+        //         }
                 
-            }
-        }
-        cout << res << endl;
+        //     }
+        // }
+        // cout << res << endl;
     }
     
 }
