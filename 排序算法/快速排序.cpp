@@ -10,7 +10,7 @@ int Partation(vector<int>&vec, int l, int r)
 {
     int val = vec[l];
     //一次快排处理
-    while(l < r)
+    while(l < r) //O(n)
     {
         while(l < r && vec[r] > val)
         {
@@ -40,6 +40,7 @@ int Partation(vector<int>&vec, int l, int r)
 //快排的递归接口
 void QuickSort(vector<int>&vec, int begin, int end)
 {
+    //O(logn)
     if(begin >= end) //快排递归的条件
     {
         return;
