@@ -3,40 +3,80 @@ using namespace std;
 #include <vector>
 #include <algorithm>
 
-bool BinarySearch(vector<int>&vec, int i, int j, int val)
+//快排分割处理函数
+int Partation(int v[], int l, int r)
 {
-    if(i > j)
+    int val = v[l];
+    //一次快排处理
+    while(l < r)
     {
-        return false;
+        while(l < r && v[r] > val)
+        {
+            r--;
+        }
+        if(l < r)
+        {
+            v[l] = v[r];
+            l++;
+        }
+
+        while(l < r && v[l] < val)
+        {
+            l++;
+        }
+        if(l < r)
+        {
+            v[r] = v[l];
+            r--;
+        }
     }
-    int mid = (i + j) / 2;
-    if(vec[mid] == val)
-    {
-        return true;
-    }
-    else if(vec[mid] < val)
-    {
-        return BinarySearch(vec, mid + 1, j, val);
-    }
-    else
-    {
-        return BinarySearch(vec, i, mid - 1, val);
-    }
+    // l == r的位置，就是放基准数的位置
+    v[l] = val;
+    return l;
 }
 
-int main() {
-    vector<int> vec;
-    for(int i = 0; i < 11; ++i)
+//快排的递归接口
+void QuickSort(int v[], int begin, int end)
+{
+    if(begin >= end) //快排递归的条件
     {
-        vec.push_back(rand() % 100);
+        return;
     }
-    sort(vec.begin(), vec.end());
-    for(int v : vec)
+    //在[begin, end]区间做一次快排分割处理
+    int pos = Partation(v, begin, end);
+
+    //对基准数的左边和右边的序列，再分别进行快排
+    QuickSort(v, begin, pos - 1);
+    QuickSort(v, pos + 1, end);   
+}
+int main() {
+    const int COUNT = 100;
+    int* arr = new int [COUNT];
+    srand(time(NULL));
+
+    for(int i = 0; i < COUNT; i++)
     {
-        cout << v << " ";
+        int val = rand() % COUNT;
+        arr[i] = val;
+    }
+
+    for(int i = 0; i < COUNT; ++i)
+    {
+        cout << arr[i] << endl;
     }
     cout << endl;
 
-    bool result = BinarySearch(vec, 0, vec.size() - 1, 74);
-    cout << result << endl;
+
+    clock_t begin, end;
+    QuickSort(arr, 0, COUNT - 1);
+    end = clock();
+    for(int i = 0; i < COUNT; ++i)
+    {
+        cout << arr[i] << endl;
+    }
+    cout << endl;
+    cout << begin << endl;
+    cout << end << endl;
+    cout << "QuickSort spend : " << (end - begin) * 1.0 << "ms" << endl;
 }
+

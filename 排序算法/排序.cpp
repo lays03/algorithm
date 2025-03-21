@@ -92,13 +92,61 @@ void ShellSort(int v[], int len)
     
 }
 
+//快排分割处理函数
+int Partation(int v[], int l, int r)
+{
+    int val = v[l];
+    //一次快排处理
+    while(l < r)
+    {
+        while(l < r && v[r] > val)
+        {
+            r--;
+        }
+        if(l < r)
+        {
+            v[l] = v[r];
+            l++;
+        }
+
+        while(l < r && v[l] < val)
+        {
+            l++;
+        }
+        if(l < r)
+        {
+            v[r] = v[l];
+            r--;
+        }
+    }
+    // l == r的位置，就是放基准数的位置
+    v[l] = val;
+    return l;
+}
+
+//快排的递归接口
+void QuickSort(int v[], int begin, int end)
+{
+    if(begin >= end) //快排递归的条件
+    {
+        return;
+    }
+    //在[begin, end]区间做一次快排分割处理
+    int pos = Partation(v, begin, end);
+
+    //对基准数的左边和右边的序列，再分别进行快排
+    QuickSort(v, begin, pos - 1);
+    QuickSort(v, pos + 1, end);   
+}
+
 int main()
 {
     const int COUNT = 100000;
-    int* arr = new int [COUNT];
+    int* arr = new int[COUNT];
     int* brr = new int[COUNT];
     int* crr = new int[COUNT];
     int* drr = new int[COUNT];
+    int* err = new int[COUNT];
 
     srand(time(NULL));
 
@@ -109,33 +157,41 @@ int main()
         brr[i] = val;
         crr[i] = val;
         drr[i] = val;
+        err[i] = val;
     }
 
     clock_t begin, end;
+    
+    begin = clock();
+    QuickSort(drr, 0, COUNT - 1);
+    end = clock();
+    cout << "QuickSort spend : " << (end - begin) * 1.0 << "ms" << endl;
+
     begin = clock();
     BubbleSort(arr, COUNT);
     end = clock();
-    cout << "BubbleSort spend : " << (end - begin) * 1.0 / CLOCKS_PER_SEC << "s" << endl;
+    cout << "BubbleSort spend : " << (end - begin) * 1.0 << "ms" << endl;
 
     begin = clock();
     SelectSort(brr, COUNT);
     end = clock();
-    cout << "SelectSort spend : " << (end - begin) * 1.0 / CLOCKS_PER_SEC << "s" << endl;
+    cout << "SelectSort spend : " << (end - begin) * 1.0 << "ms" << endl;
 
     begin = clock();
     InsertSort(crr, COUNT);
     end = clock();
-    cout << "InsertSort spend : " << (end - begin) * 1.0 / CLOCKS_PER_SEC << "s" << endl;
+    cout << "InsertSort spend : " << (end - begin) * 1.0 << "ms" << endl;
 
     begin = clock();
     ShellSort(drr, COUNT);
     end = clock();
-    cout << "ShellSort spend : " << (end - begin) * 1.0 / CLOCKS_PER_SEC << "s" << endl;
+    cout << "ShellSort spend : " << (end - begin) * 1.0 << "ms" << endl;
 
     delete [] arr;
     delete [] brr;
     delete [] crr;
     delete [] drr;
+    delete [] err;
 }
 
 #if 0
